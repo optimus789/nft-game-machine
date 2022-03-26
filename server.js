@@ -23,16 +23,19 @@ const server = app.listen(port, host, () => {
 });
 
 const profileRoute = require('./routes/profileRoute');
-var apiRoute = require('./routes/apiRoute');
+var apiRouteSymbals = require('./routes/apiRoute-symbal');
+var apiRouteChicken = require('./routes/apiRoute-chicken');
 
-app.use('/api', apiRoute);
+app.use('/api', apiRouteSymbals);
+app.use('/apiRoute', apiRouteChicken);
 
 app.use('/profile', profileRoute);
-
 app.get('/', (req, res) => {
-  res.render('symbalsHome', { moralisAppKey, moralisServerUrl });
+  res.render('home', { moralisAppKey, moralisServerUrl });
 });
-
+app.get('/cryptochickenrun', (req, res) => {
+  res.render('cryptochickenHome', { moralisAppKey, moralisServerUrl });
+});
 app.get('/symbals', (req, res) => {
   res.render('symbalsHome', { moralisAppKey, moralisServerUrl });
 });

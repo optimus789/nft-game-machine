@@ -68,7 +68,7 @@ Symbals.PreloadState.prototype.preload = function () {
   game.load.audio("sound-error", ["assets/sound/error.wav"], true);
   game.load.audio("sound-startlevel", ["assets/sound/startlevel.wav"], true);
 
-  game.load.json('level1', 'js/levels/level1.json');
+  game.load.json('level1', 'symbalsjs/levels/level1.json');
 
   game.load.onFileComplete.add(function(process) {
     text.text = process + "%";
