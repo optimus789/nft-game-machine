@@ -58,7 +58,7 @@ async function login() {
   if (!user) {
     try {
       user = await Moralis.authenticate({
-        signingMessage: 'Welcome to Symbals',
+        signingMessage: 'Welcome to NFT Game Machine',
       });
       console.log(user.get('ethAddress'));
       $('#userId').val(user.get('ethAddress'));
