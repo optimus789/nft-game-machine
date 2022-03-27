@@ -16,7 +16,7 @@ function setMoralisData() {
     );
     console.log(`${user.get('ethAddress')}`);
     const cardDiv = `<div class="card bg-light nft-card col-3 m-2" nft-level="{nft-level}" onclick="setTokenId(this.id)" id="{token_id}">
-    <img class="card-img-top" src="{nft-image}" alt="2048 NFT Game">
+    <img class="card-img-top" src="{nft-image}" alt="Symbals NFT Game">
     <div class="card-body">
         <h5 class="card-title">{nft-title}</h5>
         <p class="card-text">{nft-description}</p>
