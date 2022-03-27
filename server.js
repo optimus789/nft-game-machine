@@ -24,10 +24,12 @@ const server = app.listen(port, host, () => {
 
 const profileRoute = require('./routes/profileRoute');
 var apiRouteSymbals = require('./routes/apiRoute-symbal');
+var apilens = require('./routes/apiRoute-lens');
 var apiRouteChicken = require('./routes/apiRoute-chicken');
 
 app.use('/api', apiRouteSymbals);
 app.use('/apiRoute', apiRouteChicken);
+app.use('/lens', apilens);
 
 app.use('/profile', profileRoute);
 app.get('/', (req, res) => {

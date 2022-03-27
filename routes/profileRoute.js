@@ -7,4 +7,8 @@ router.route('/cryptochicken').get((req, res) => {
     res.render('profile-chicken');
 });
 
+router.route('/').get((req, res) => {
+    res.render('lensprofile');
+});
+
 module.exports = router;
