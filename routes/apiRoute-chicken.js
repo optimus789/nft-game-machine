@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const axios = require('axios');
-const { ethers,Wallet, providers } = require('ethers');
+const { ethers, Wallet, providers } = require('ethers');
 const { connect } = require('@textile/tableland');
 const fetch = require('node-fetch');
 
@@ -15,92 +15,92 @@ const provider = new providers.AlchemyProvider(
 );
 const signer = wallet.connect(provider);
 let scoreTableRes, highTableRes;
-const contract_address = "0x873C456f308F91e47aC6284b9a785Ccf62ccC0b3";
+const chainLinkVrfContractAddress = "0x873C456f308F91e47aC6284b9a785Ccf62ccC0b3";
 const contractAbi = [
-	{
-		"inputs": [
-			{
-				"internalType": "uint64",
-				"name": "subscriptionId",
-				"type": "uint64"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "have",
-				"type": "address"
-			},
-			{
-				"internalType": "address",
-				"name": "want",
-				"type": "address"
-			}
-		],
-		"name": "OnlyCoordinatorCanFulfill",
-		"type": "error"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "requestId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256[]",
-				"name": "randomWords",
-				"type": "uint256[]"
-			}
-		],
-		"name": "rawFulfillRandomWords",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "requestRandomWords",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "s_randomWords",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "s_requestId",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	}
+  {
+    "inputs": [
+      {
+        "internalType": "uint64",
+        "name": "subscriptionId",
+        "type": "uint64"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "have",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "want",
+        "type": "address"
+      }
+    ],
+    "name": "OnlyCoordinatorCanFulfill",
+    "type": "error"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "requestId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "randomWords",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "rawFulfillRandomWords",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "requestRandomWords",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "s_randomWords",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "s_requestId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
 ];
 
 router.route('/createScoreTable').get(async (req, res) => {
@@ -150,7 +150,7 @@ router.route('/updateScores/:address/:score').get(async (req, res) => {
     const insertRes = await tbl.query(queryToSend);
     console.log('Insert Rest', insertRes);
     // add contract calling here
-    let contract = new ethers.Contract(contract_address, contractAbi, signer);
+    let contract = new ethers.Contract(chainLinkVrfContractAddress, contractAbi, signer);
     let transaction = await contract.requestRandomWords();
     let tx = await transaction.wait()
     // console.log(tx);
@@ -173,7 +173,7 @@ router.route('/getScores/:address').get(async (req, res) => {
       `SELECT * FROM ${queryableName} WHERE address = '${address}';`
     );
     if (queryRes.length !== 0) {
-      let contract = new ethers.Contract(contract_address, contractAbi, signer);
+      let contract = new ethers.Contract(chainLinkVrfContractAddress, contractAbi, signer);
       let transaction = await contract.s_requestId();
       // console.log(transaction);
       let randomNum = String(parseInt(transaction._hex));
